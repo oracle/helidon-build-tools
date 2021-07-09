@@ -15,13 +15,17 @@
  */
 
 import * as vscode from 'vscode';
-import { showHelidonGenerator } from './generator';
-import { startHelidonDev } from "./helidonDev";
-import { stopHelidonDev } from "./helidonDev";
-import { VSCodeHelidonCommands } from "./common";
-import { openStartPage } from "./startPage";
-import { updateWorkspaceDocuments } from "./propertiesSupport";
-import { commands, WorkspaceFoldersChangeEvent } from 'vscode';
+import {showHelidonGenerator} from './generator';
+import {startHelidonDev} from "./helidonDev";
+import {stopHelidonDev} from "./helidonDev";
+import {VSCodeHelidonCommands} from "./common";
+import {openStartPage} from "./startPage";
+import {commands, WorkspaceFoldersChangeEvent} from 'vscode';
+import {ChildProcess} from 'child_process';
+import {ChildProcessAPI} from './ChildProcessAPI';
+import {startSocketLangServer} from './languageServer';
+
+let langServerProcess: ChildProcess;
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -52,8 +56,15 @@ export function activate(context: vscode.ExtensionContext) {
         stopHelidonDev();
     }));
 
-    updateWorkspaceDocuments(context);
+    startSocketLangServer(context).then(data => {
+        if (data) {
+            langServerProcess = data;
+        }
+    });
 }
 
 export function deactivate() {
+    if (langServerProcess) {
+        ChildProcessAPI.killProcess(langServerProcess.pid);
+    }
 }

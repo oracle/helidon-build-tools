@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2021 Oracle and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-const gulp = require('gulp');
-
-gulp.task('build', (done) => {
-    gulp.src('../lsp/io.helidon.lsp.server/target/io.helidon.lsp.server.jar').pipe(gulp.dest('./target/server'));
-    done();
-});
+/**
+ * Utility classes for the Helidon Language Server.
+ */
+package io.helidon.lsp.server.utils;

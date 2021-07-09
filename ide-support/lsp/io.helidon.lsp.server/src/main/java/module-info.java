@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2021 Oracle and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,19 @@
  * limitations under the License.
  */
 
-const gulp = require('gulp');
-
-gulp.task('build', (done) => {
-    gulp.src('../lsp/io.helidon.lsp.server/target/io.helidon.lsp.server.jar').pipe(gulp.dest('./target/server'));
-    done();
-});
+/**
+ * Helidon Language Server.
+ */
+module io.helidon.lsp.server {
+    requires java.logging;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.dataformat.yaml;
+    requires org.eclipse.lsp4j;
+    requires org.eclipse.lsp4j.jsonrpc;
+    requires gson;
+    requires io.helidon.security.providers.common;
+    requires io.helidon.build.common.maven;
+    opens io.helidon.lsp.server.service.config;
+    opens io.helidon.lsp.server.model;
+}

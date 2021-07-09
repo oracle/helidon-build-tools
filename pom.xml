@@ -141,8 +141,7 @@
         <version.lib.junit>5.8.0-M1</version.lib.junit>
         <version.lib.junit-platform>1.8.0-M1</version.lib.junit-platform>
         <version.lib.junit4>4.13.1</version.lib.junit4>
-        <version.lib.lsp4j>0.9.0</version.lib.lsp4j>
-        <version.lib.lsp4mp>0.2.0</version.lib.lsp4mp>
+        <version.lib.lsp4j>0.12.0</version.lib.lsp4j>
         <version.lib.maven>3.6.2</version.lib.maven>
         <version.lib.maven-annotations>3.5</version.lib.maven-annotations>
         <version.lib.maven-archiver>3.5.0</version.lib.maven-archiver>
@@ -154,6 +153,7 @@
         <version.lib.maven-settings>3.6.2</version.lib.maven-settings>
         <version.lib.mock-server>5.10.0</version.lib.mock-server>
         <version.lib.mustache>0.9.6</version.lib.mustache>
+        <version.lib.mockito>3.10.0</version.lib.mockito>
         <version.lib.picocli-jansi>1.1.0</version.lib.picocli-jansi>
         <version.lib.plexus-archiver>4.1.0</version.lib.plexus-archiver>
         <version.lib.plexus-build-api>0.0.7</version.lib.plexus-build-api>
@@ -198,7 +198,7 @@
         <version.plugin.surefire.provider.junit>1.0.3</version.plugin.surefire.provider.junit>
         <version.plugin.surefire>3.0.0-M5</version.plugin.surefire>
         <version.plugin.toolchains>1.1</version.plugin.toolchains>
-        <version.plugin.tycho>2.2.0</version.plugin.tycho>
+        <version.plugin.shade>3.2.4</version.plugin.shade>
     </properties>
 
     <modules>
@@ -484,39 +484,14 @@
                     <version>${version.plugin.jacoco}</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-maven-plugin</artifactId>
-                    <version>${version.plugin.tycho}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>target-platform-configuration</artifactId>
-                    <version>${version.plugin.tycho}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-compiler-plugin</artifactId>
-                    <version>${version.plugin.tycho}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-source-plugin</artifactId>
-                    <version>${version.plugin.tycho}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-surefire-plugin</artifactId>
-                    <version>${version.plugin.tycho}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-packaging-plugin</artifactId>
-                    <version>${version.plugin.tycho}</version>
-                </plugin>
-                <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>${version.plugin.frontend}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${version.plugin.shade}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -761,6 +736,16 @@
                 <version>${version.lib.hamcrest}</version>
             </dependency>
             <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${version.lib.mockito}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${version.lib.mockito}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.github.wumpz</groupId>
                 <artifactId>diffutils</artifactId>
                 <version>${version.lib.diffutils}</version>
@@ -831,6 +816,16 @@
                 <version>${version.lib.jackson}</version>
             </dependency>
             <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-properties</artifactId>
+                <version>${version.lib.jackson}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-yaml</artifactId>
+                <version>${version.lib.jackson}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${version.lib.apache-commons}</version>
@@ -854,17 +849,6 @@
                 <groupId>org.eclipse.lsp4j</groupId>
                 <artifactId>org.eclipse.lsp4j.jsonrpc</artifactId>
                 <version>${version.lib.lsp4j}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.lsp4mp</groupId>
-                <artifactId>org.eclipse.lsp4mp.ls</artifactId>
-                <version>${version.lib.lsp4mp}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.lsp4mp</groupId>
-                <artifactId>org.eclipse.lsp4mp.ls</artifactId>
-                <classifier>tests</classifier>
-                <version>${version.lib.lsp4mp}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -910,6 +894,11 @@
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-embedder</artifactId>
                 <version>${version.lib.maven-embedder}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.helidon.security.providers</groupId>
+                <artifactId>helidon-security-providers-common</artifactId>
+                <version>${version.lib.helidon}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
